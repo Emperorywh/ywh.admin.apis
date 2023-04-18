@@ -1,0 +1,16 @@
+{
+  "name": "ywh.admin.apis",
+  "version": "1.0.0",
+  "description": "综合后台管理系统后端接口",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.4",
+    "nodemon": "^2.0.22"
+  }
+}
