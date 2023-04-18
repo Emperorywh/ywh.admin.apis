@@ -1,5 +1,7 @@
 const { User } = require('../model/index');
 const { validationResult } = require('express-validator');
+const JsonWebToken = require("../middleware/JsonWebToken");
+const JsonResponse = require("../utils/JsonResponse");
 
 module.exports = {
 
@@ -8,44 +10,27 @@ module.exports = {
         const user = req.body;
         const findUser = await User.findOne({ username: user.username });
         if (findUser) {
-            res.json(ResponseResult(
-                false,
-                null,
-                '该用户已存在'
-            ));
+            JsonResponse(res, 500, null, '该用户已存在');
         } else {
             user.persionalProfile = '再见少年拉满弓，不惧岁月不惧风。';
-            const date = new Date();
             const newUser = new User(user);
             try {
                 const userResponse = await newUser.save(newUser);
-                res.json({
-                    code: 200,
-                    data: userResponse,
-                    message: '注册成功'
-                });
+                JsonResponse(res, 200, userResponse, '注册成功');
             } catch {
-                res.json({
-                    code: 500,
-                    data: userResponse,
-                    message: '注册失败！'
-                });
+                JsonResponse(res, 500, userResponse, '注册失败！');
             }
         }
     },
 
     //用户登录
     async Login(req, res, next) {
-        
+
         // 检查参数验证结果
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             // 如果有错误，返回错误信息
-            return res.status(400).json({
-                code: 400,
-                data: null,
-                message: errors.array()
-            });
+            return JsonResponse(res, 500, null, errors.array());
         }
         const reqUser = req.body;
         const findUser = await User.findOne({
@@ -53,24 +38,45 @@ module.exports = {
         });
         if (findUser) {
             if (findUser.password === reqUser.password) {
-                res.json({
-                    code: 200,
-                    data: findUser,
-                    message: '登录成功！'
-                });
+                //签发token
+                const token = JsonWebToken.signToken(findUser._id);
+                return JsonResponse(res, 200, {
+                    token,
+                    userInfo: findUser
+                }, "登录成功");
             } else {
-                res.json({
-                    code: 500,
-                    data: null,
-                    message: '密码错误！'
-                });
+                return JsonResponse(res, 500, null, "密码错误");
             }
         } else {
-            res.json({
-                code: 500,
-                data: null,
-                message: '该用户不存在！'
-            });
+            return JsonResponse(res, 500, null, "该用户不存在");
+        }
+    },
+
+    async UserList(req, res, next) {
+        const { pageIndex, pageSize, userId, username } = req.body;
+        //查询条件
+        const query = {};
+        if (userId) {
+            query.userId = userId;
+        }
+        if (username) {
+            query.username = {
+                $regex: new RegExp(username, 'i')
+            };
+        }
+        try {
+            //查询用户总数
+            const totalUser = await User.countDocuments(query);
+            //查询用户列表
+            const userList = await User.find(query)
+                .skip((pageIndex - 1) * pageSize)
+                .limit(pageSize);
+            JsonResponse(res, 200, {
+                total: totalUser,
+                userList,
+            }, "查询成功");
+        } catch (err) {
+            JsonResponse(res, 500, null, err.message);
         }
     }
 }
