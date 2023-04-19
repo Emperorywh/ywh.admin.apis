@@ -1,11 +1,15 @@
 const { User } = require('../model/index');
-const { validationResult } = require('express-validator');
 const JsonWebToken = require("../middleware/JsonWebToken");
 const JsonResponse = require("../utils/JsonResponse");
 
 module.exports = {
 
-    //用户注册
+    /**
+     * 用户注册
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     async Register(req, res, next) {
         const user = req.body;
         const findUser = await User.findOne({ username: user.username });
@@ -23,15 +27,14 @@ module.exports = {
         }
     },
 
-    //用户登录
+    /**
+     * 用户登录
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     * @returns 
+     */
     async Login(req, res, next) {
-
-        // 检查参数验证结果
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            // 如果有错误，返回错误信息
-            return JsonResponse(res, 500, null, errors.array());
-        }
         const reqUser = req.body;
         const findUser = await User.findOne({
             username: reqUser.username
@@ -52,6 +55,12 @@ module.exports = {
         }
     },
 
+    /**
+     * 分页查询用户列表
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     async UserList(req, res, next) {
         const { pageIndex, pageSize, userId, username } = req.body;
         //查询条件

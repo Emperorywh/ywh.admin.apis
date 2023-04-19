@@ -12,4 +12,7 @@ db.once('open', () => {
 
 module.exports = {
     User: mongoose.model('User', require('./User'), 'user'),
+    Blog: mongoose.model('Blog', require('./Blog'), 'blog'),
+    BlogClassify: mongoose.model('BlogClassify', require('./BlogClassify'), 'blogClassify'),
+    BlogLabel: mongoose.model('BlogLabel', require('./BlogLabel'), 'blogLabel'),
 }

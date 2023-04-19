@@ -11,7 +11,7 @@ const signToken = (userId) => {
     const token = jwt.sign({
         userId
     }, secret_key, {
-        expiresIn: 60 * 2
+        expiresIn: 60 * 60 * 24 * 30
     });
     return `Bearer ${token}`;
 }
