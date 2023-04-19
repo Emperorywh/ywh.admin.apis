@@ -23,35 +23,44 @@ const signToken = (userId) => {
  * @param {*} next 
  */
 const verifyToken = (req, res, next) => {
-    const token = req.header("Authorization");
-    if (!token) {
-        return res.status(401).json({
-            code: 401,
-            data: null,
-            message: '无授权访问'
-        });
-    }
-    const splitToken = token.split(' ')[1];
-    if (splitToken) {
-        try {
-            const result = jwt.verify(splitToken, secret_key);
-            // 将解码后的用户信息存储在请求对象中
-            req.userId = result.userId;
-            next();
-        } catch (err) {
+    //不用验证token的url数组
+    const withoutAuthUrl = [
+        '/apis/user/login'
+    ];
+    const findWithoutUrl = withoutAuthUrl.find(item => item === req.originalUrl);
+    if (findWithoutUrl) {
+        next();
+    } else {
+        const token = req.header("Authorization");
+        if (!token) {
             return res.status(401).json({
                 code: 401,
                 data: null,
-                message: err.message
+                message: '无授权访问'
             });
         }
-        
-    } else {
-        return res.status(401).json({
-            code: 401,
-            data: null,
-            message: '无授权访问'
-        });
+        const splitToken = token.split(' ')[1];
+        if (splitToken) {
+            try {
+                const result = jwt.verify(splitToken, secret_key);
+                // 将解码后的用户信息存储在请求对象中
+                req.userId = result.userId;
+                next();
+            } catch (err) {
+                return res.status(401).json({
+                    code: 401,
+                    data: null,
+                    message: err.message
+                });
+            }
+
+        } else {
+            return res.status(401).json({
+                code: 401,
+                data: null,
+                message: '无授权访问'
+            });
+        }
     }
 }
 
