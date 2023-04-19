@@ -43,6 +43,7 @@ module.exports = {
             if (findUser.password === reqUser.password) {
                 //签发token
                 const token = JsonWebToken.signToken(findUser._id);
+                delete findUser.password;
                 return JsonResponse(res, 200, {
                     token,
                     userInfo: findUser

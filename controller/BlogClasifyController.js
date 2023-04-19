@@ -18,14 +18,18 @@ module.exports = {
     },
 
     /**
-     * 删除博客分类
+     * 删除博客分类（软删除）
      * @param {*} req 
      * @param {*} res 
      * @param {*} next 
      */
     async BlogClassifyDelete(req, res, next) {
         try {
-            const result = await BlogClassify.findByIdAndUpdate(req.body._id, { status: 2 });
+            const result = await BlogClassify.updateMany({
+                _id: {
+                    $in: req.body
+                }
+            }, { status: 2 });
             JsonResponse(res, 200, result, '删除成功');
         } catch (err) {
             JsonResponse(res, 500, null, err.message);
@@ -64,7 +68,7 @@ module.exports = {
                 }
             }
             const total = await BlogClassify.find(query).countDocuments();
-            const result = await BlogClassify.find(query).skip((pageIndex - 1) * pageSize).limit(pageSize);
+            const result = await BlogClassify.find(query).sort('sort').skip((pageIndex - 1) * pageSize).limit(pageSize);
             JsonResponse(res, 200, {
                 total,
                 items: result
