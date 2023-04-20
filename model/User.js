@@ -26,12 +26,12 @@ const UserSchema = new Schema({
     },
     //创建时间
     createAt: {
-        type: Date,
+        type: Number,
         default: Date.now()
     },
     //更新时间
     updateAt: {
-        type: Date,
+        type: Number,
         default: Date.now()
     },
     //头像地址

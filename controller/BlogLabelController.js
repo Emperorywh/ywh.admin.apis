@@ -40,8 +40,18 @@ module.exports = {
      */
     async BlogLabelUpdate(req, res, next) {
         try {
-            const result = await BlogLabel.findByIdAndUpdate(req.body._id, req.body);
-            JsonResponse(res, 200, result, '更新成功');
+            const find = await BlogLabel.findById(req.body._id);
+            if (find) {
+                const updateData = {
+                    ...find._doc,
+                    ...req.body,
+                    updateAt: Date.now()
+                }
+                await BlogLabel.findByIdAndUpdate(req.body._id, updateData);
+                JsonResponse(res, 200, updateData, '更新成功');
+            } else {
+                JsonResponse(res, 500, null, "该分类不存在");
+            }
         } catch (err) {
             JsonResponse(res, 500, null, err.message);
         }

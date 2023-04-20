@@ -43,8 +43,18 @@ module.exports = {
      */
     async BlogUpdate(req, res, next) {
         try {
-            const result = await Blog.findByIdAndUpdate(req.body._id, req.body);
-            JsonResponse(res, 200, result, '更新成功');
+            const blog = await Blog.findById(req.body._id);
+            if (blog) {
+                const updateData = {
+                    ...blog._doc,
+                    ...req.body,
+                    updateAt: Date.now()
+                }
+                await Blog.findByIdAndUpdate(req.body._id, updateData);
+                JsonResponse(res, 200, updateData, '更新成功');
+            } else {
+                JsonResponse(res, 500, null, "博客不存在");
+            }
         } catch (err) {
             JsonResponse(res, 500, null, err.message);
         }
