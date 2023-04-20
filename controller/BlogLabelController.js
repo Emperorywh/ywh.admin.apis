@@ -67,7 +67,11 @@ module.exports = {
         try {
             const { pageIndex, pageSize, name } = req.body;
             //查询条件
-            const query = {};
+            const query = {
+                status: {
+                    $ne: 2
+                }
+            };
             if (name) {
                 query.name = {
                     $regex: new RegExp(name, 'i')

@@ -70,7 +70,11 @@ module.exports = {
         try {
             const { pageIndex, pageSize, title } = req.body;
             //查询条件
-            const query = {};
+            const query = {
+                status: {
+                    $ne: 2
+                }
+            };
             if (title) {
                 query.title = {
                     $regex: new RegExp(title, 'i')
@@ -80,7 +84,7 @@ module.exports = {
             const result = await Blog.find(query).skip((pageIndex - 1) * pageSize).limit(pageSize).populate("author", "-password").populate(["classification", "label"]);
             JsonResponse(res, 200, {
                 total,
-                blogList: result
+                items: result
             }, '查询成功');
         } catch (err) {
             JsonResponse(res, 500, null, err.message);
