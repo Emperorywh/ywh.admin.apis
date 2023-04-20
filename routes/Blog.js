@@ -13,7 +13,7 @@ router.post('/create', [
 ], ValidationMiddleware, BlogController.BlogCreate);
 
 router.delete('/delete', [
-    body('_id').notEmpty().withMessage('ID不能为空')
+    body().notEmpty().withMessage('ID不能为空'),
 ], ValidationMiddleware, BlogController.BlogDelete);
 
 router.put('/update', [

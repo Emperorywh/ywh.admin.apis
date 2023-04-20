@@ -28,7 +28,11 @@ module.exports = {
      */
     async BlogDelete(req, res, next) {
         try {
-            const result = await Blog.findByIdAndUpdate(req.body._id, { status: 2 });
+            const result = await Blog.updateMany({
+                _id: {
+                    $in: req.body
+                }
+            }, { status: 2 });
             JsonResponse(res, 200, result, '删除成功');
         } catch (err) {
             JsonResponse(res, 500, null, err.message);
@@ -68,7 +72,7 @@ module.exports = {
      */
     async BlogPageQuery(req, res, next) {
         try {
-            const { pageIndex, pageSize, title } = req.body;
+            const { pageIndex, pageSize, title, classification, label } = req.body;
             //查询条件
             const query = {
                 status: {
@@ -80,6 +84,15 @@ module.exports = {
                     $regex: new RegExp(title, 'i')
                 }
             }
+            if (classification) {
+                query.classification = classification;
+            }
+            if (label && label.length > 0) {
+                query.label = {
+                    $in: label
+                }
+            }
+            console.log(query);
             const total = await Blog.find(query).countDocuments();
             const result = await Blog.find(query).skip((pageIndex - 1) * pageSize).limit(pageSize).populate("author", "-password").populate(["classification", "label"]);
             JsonResponse(res, 200, {
