@@ -92,7 +92,6 @@ module.exports = {
                     $in: label
                 }
             }
-            console.log(query);
             const total = await Blog.find(query).countDocuments();
             const result = await Blog.find(query).skip((pageIndex - 1) * pageSize).limit(pageSize).populate("author", "-password").populate(["classification", "label"]);
             JsonResponse(res, 200, {
