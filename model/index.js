@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1/admin');
+mongoose.connect('mongodb://127.0.0.1/ywhAdmin');
 const db = mongoose.connection;
 
 db.on('error', err => {
@@ -15,4 +15,5 @@ module.exports = {
     Blog: mongoose.model('Blog', require('./Blog'), 'blog'),
     BlogClassify: mongoose.model('BlogClassify', require('./BlogClassify'), 'blogClassify'),
     BlogLabel: mongoose.model('BlogLabel', require('./BlogLabel'), 'blogLabel'),
+    FriendlyLink: mongoose.model('FriendlyLink', require('./FriendlyLink'), 'friendlyLink'),
 }

@@ -5,5 +5,6 @@ router.use('/user', require('./User'));
 router.use('/blog', require('./Blog'));
 router.use('/blogClassify', require('./BlogClassify'));
 router.use('/blogLabel', require('./BlogLabel'));
+router.use('/friendlyLink', require('./FriendlyLink'));
 
 module.exports = router;

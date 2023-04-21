@@ -27,8 +27,8 @@ router.put('/update', [
 ], ValidationMiddleware, BlogController.BlogUpdate);
 
 router.post('/list', [
-    body('pageIndex').notEmpty().withMessage('ID不能为空'),
-    body('pageSize').notEmpty().withMessage('作者不能为空')
+    body('pageIndex').notEmpty().withMessage('pageIndex不能为空'),
+    body('pageSize').notEmpty().withMessage('pageSize不能为空')
 ], ValidationMiddleware, BlogController.BlogPageQuery);
 
 router.get('/:blogId', [
