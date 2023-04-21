@@ -1,6 +1,7 @@
 const { User } = require('../model/index');
 const JsonWebToken = require("../middleware/JsonWebToken");
 const JsonResponse = require("../utils/JsonResponse");
+const UploadFile = require("../utils/UploadFile");
 
 module.exports = {
 
@@ -89,5 +90,21 @@ module.exports = {
         } catch (err) {
             JsonResponse(res, 500, null, err.message);
         }
+    },
+
+    /**
+     * 用户上传图片
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
+    async UploadImage (req, res, next) {
+        const response = await UploadFile(req);
+        if (response.code === 200) {
+            JsonResponse(res, 200, response.data, response.message);
+        } else {
+            JsonResponse(res, 500, null, response.message);
+        }
     }
+
 }
