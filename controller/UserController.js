@@ -98,13 +98,38 @@ module.exports = {
      * @param {*} res 
      * @param {*} next 
      */
-    async UploadImage (req, res, next) {
+    async UploadImage(req, res, next) {
         const response = await UploadFile(req);
         if (response.code === 200) {
             JsonResponse(res, 200, response.data, response.message);
         } else {
             JsonResponse(res, 500, null, response.message);
         }
-    }
+    },
+
+    /**
+     * 用户上传博客图片
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
+    async UploadBlogImage(req, res, next) {
+        const response = await UploadFile(req);
+        if (response.code === 200) {
+            res.status(200).json({
+                errno: 0,
+                data: {
+                    url: response.data
+                }
+            })
+        } else {
+            res.status(200).json({
+                errno: 1,
+                data: {
+                    message: response.message
+                }
+            })
+        }
+    },
 
 }

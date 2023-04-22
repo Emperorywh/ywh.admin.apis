@@ -34,4 +34,6 @@ router.post('/list', [
 
 router.post('/uploadImage', upload.single("file"), UserController.UploadImage);
 
+router.post('/uploadBlogImage', upload.single("file"), UserController.UploadBlogImage);
+
 module.exports = router;
