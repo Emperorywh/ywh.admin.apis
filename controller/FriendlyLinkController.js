@@ -82,7 +82,7 @@ module.exports = {
                 }
             }
             const total = await FriendlyLink.find(query).countDocuments();
-            const result = await FriendlyLink.find(query).skip((pageIndex - 1) * pageSize).limit(pageSize);
+            const result = await FriendlyLink.find(query).sort("sort").skip((pageIndex - 1) * pageSize).limit(pageSize);
             JsonResponse(res, 200, {
                 total,
                 items: result
