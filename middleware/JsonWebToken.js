@@ -26,7 +26,8 @@ const verifyToken = (req, res, next) => {
     //不用验证token的url数组
     const withoutAuthUrl = [
         '/apis/user/login',
-        '/apis/user/register'
+        '/apis/user/register',
+        '/apis/blog/list'
     ];
     const findWithoutUrl = withoutAuthUrl.find(item => item === req.originalUrl);
     if (findWithoutUrl) {
