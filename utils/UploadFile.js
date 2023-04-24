@@ -17,7 +17,7 @@ const UploadFile = async (req) => {
         // 如果本地文件的完整路径中未指定本地路径，则默认从示例程序所属项目对应本地路径中上传文件。
         const result = await client.put(`/blog/${req.userId}/` + req.file.originalname, req.file.path, {
             headers: {
-                "Content-Disposition": "inline"
+                'Content-Type': 'image/jpg'
             }
         });
         if (result.res.statusCode === 200) {

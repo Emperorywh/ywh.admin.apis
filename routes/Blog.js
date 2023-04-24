@@ -31,7 +31,7 @@ router.post('/list', [
     body('pageSize').notEmpty().withMessage('pageSize不能为空')
 ], ValidationMiddleware, BlogController.BlogPageQuery);
 
-router.get('/:blogId', [
+router.get('/detail/:blogId', [
     param('blogId').notEmpty().withMessage('ID不能为空'),
 ], ValidationMiddleware, BlogController.BlogById);
 

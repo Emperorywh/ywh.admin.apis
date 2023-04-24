@@ -116,10 +116,16 @@ module.exports = {
     async UploadBlogImage(req, res, next) {
         const response = await UploadFile(req);
         if (response.code === 200) {
+            const url = response.data;
+            const fileName = url.split("/").pop();
             res.status(200).json({
-                errno: 0,
-                data: {
-                    url: response.data
+                "msg": "上传成功！",
+                "code": 0,
+                "data": {
+                    "errFiles": [],
+                    "succMap": {
+                        [fileName]: url
+                    }
                 }
             })
         } else {

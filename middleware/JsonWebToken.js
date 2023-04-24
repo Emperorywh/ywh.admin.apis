@@ -27,9 +27,12 @@ const verifyToken = (req, res, next) => {
     const withoutAuthUrl = [
         '/apis/user/login',
         '/apis/user/register',
-        '/apis/blog/list'
+        '/apis/blog/list',
+        '/apis/blog/detail',
+        '/apis/blogClassify/list',
+        '/apis/blogLabel/list',
     ];
-    const findWithoutUrl = withoutAuthUrl.find(item => item === req.originalUrl);
+    const findWithoutUrl = withoutAuthUrl.find(item => req.originalUrl.includes(item));
     if (findWithoutUrl) {
         next();
     } else {
