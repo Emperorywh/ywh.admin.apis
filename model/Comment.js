@@ -15,13 +15,23 @@ const CommentSchema = new Schema({
     to: {
         type: String
     },
+    email: {
+        type: String,
+        require: true
+    },
     avatarUrl: {
         type: String,
+        default: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
         require: true
     },
     content: {
         type: String,
         require: true
+    },
+    createAt: {
+        type: Number,
+        require: true,
+        default: Date.now()
     }
 });
 
