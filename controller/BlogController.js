@@ -112,7 +112,25 @@ module.exports = {
     async BlogById(req, res, next) {
         try {
             const result = await Blog.findById(req.params.blogId).populate("author", "-password").populate(["classification", "label"]);
-            JsonResponse(res, 200, result, '查询成功');
+            const prevBlog = await Blog.findOne({
+                $or: [
+                    { _id: { $lt: req.params.blogId } },
+                    { _id: { $gt: req.params.blogId } }
+                ],
+                status: { $ne: 2 }
+            }).sort({ _id: -1 });
+            const nextBlog = await Blog.findOne({
+                $or: [
+                    { _id: { $gt: req.params.blogId } },
+                    { _id: { $lt: req.params.blogId } }
+                ],
+                status: { $ne: 2 }
+            }).sort({ _id: 1 });
+            JsonResponse(res, 200, {
+                blog: result,
+                prevBlog,
+                nextBlog
+            }, '查询成功');
         } catch (err) {
             JsonResponse(res, 500, null, err.message);
         }

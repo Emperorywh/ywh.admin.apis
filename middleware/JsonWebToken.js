@@ -31,6 +31,8 @@ const verifyToken = (req, res, next) => {
         '/apis/blog/detail',
         '/apis/blogClassify/list',
         '/apis/blogLabel/list',
+        '/apis/friendlyLink/list',
+        '/apis/friendlyLink/create'
     ];
     const findWithoutUrl = withoutAuthUrl.find(item => req.originalUrl.includes(item));
     if (findWithoutUrl) {
