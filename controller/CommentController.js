@@ -1,5 +1,6 @@
 const { Comment } = require("../model");
 const JsonResponse = require("../utils/JsonResponse");
+const ArrayToTree = require("../utils/ArrayToTree");
 
 module.exports = {
     /**
@@ -27,10 +28,10 @@ module.exports = {
         try {
             const result = await Comment.find({
                 blogId: req.body.blogId
-            });
-            JsonResponse(res, 200, result, '查询成功');
+            }).populate("to");
+            JsonResponse(res, 200, ArrayToTree(result, ""), '查询成功');
         } catch (error) {
-            JsonResponse(res, 500, null, err.message);
+            JsonResponse(res, 500, null, error.message);
         }
     }
 }

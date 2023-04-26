@@ -3,17 +3,23 @@ const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
     blogId: {
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
+        ref: 'Blog'
     },
     parent: {
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
+        ref: 'Comment',
+        default: null
     },
     from: {
         type: String,
         require: true
     },
     to: {
-        type: String
+        type: mongoose.Types.ObjectId,
+        type: String,
+        ref: 'Comment',
+        default: null
     },
     email: {
         type: String,
