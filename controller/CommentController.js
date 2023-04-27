@@ -29,7 +29,7 @@ module.exports = {
             const result = await Comment.find({
                 blogId: req.body.blogId
             }).populate("to");
-            JsonResponse(res, 200, ArrayToTree(result, ""), '查询成功');
+            JsonResponse(res, 200, result, '查询成功');
         } catch (error) {
             JsonResponse(res, 500, null, error.message);
         }
