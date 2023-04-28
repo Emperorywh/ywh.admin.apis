@@ -25,7 +25,11 @@ module.exports = {
      */
     async BlogLabelDelete(req, res, next) {
         try {
-            const result = await BlogLabel.findByIdAndUpdate(req.body._id, { status: 2 });
+            const result = await BlogLabel.updateMany({
+                _id: {
+                    $in: req.body
+                }
+            }, { status: 2 });
             JsonResponse(res, 200, result, '删除成功');
         } catch (err) {
             JsonResponse(res, 500, null, err.message);

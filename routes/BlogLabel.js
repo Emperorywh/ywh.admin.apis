@@ -9,7 +9,7 @@ router.post('/create', [
 ], ValidationMiddleware, BlogLabelController.BlogLabelCreate);
 
 router.delete('/delete', [
-    body('_id').notEmpty().withMessage('ID不能为空'),
+    body().notEmpty().withMessage('ID不能为空'),
 ], ValidationMiddleware, BlogLabelController.BlogLabelDelete);
 
 router.put('/update', [
