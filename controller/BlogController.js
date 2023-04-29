@@ -12,7 +12,8 @@ module.exports = {
         try {
             const result = await Blog.create({
                 ...req.body,
-                author: req.userId
+                author: req.userId,
+                updateAt: Date.now()
             });
             JsonResponse(res, 200, result, '创建成功');
         } catch (err) {

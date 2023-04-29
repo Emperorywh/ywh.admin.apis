@@ -4,10 +4,15 @@ const UserController = require('../controller/UserController');
 const { body } = require('express-validator');
 const ValidationMiddleware = require('../middleware/ValidationMiddleware');
 const multer = require('multer');
+const fs = require("fs");
+
 // 创建multer实例 
 const upload = multer({
     storage: multer.diskStorage({
         destination: function (req, file, cb) {
+            if (!fs.existsSync('./uploads')) {
+                fs.mkdirSync("./uploads");
+            }
             cb(null, './uploads');
         },
         filename: function (req, file, cb) {
