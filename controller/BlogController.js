@@ -94,7 +94,7 @@ module.exports = {
                 }
             }
             const total = await Blog.find(query).countDocuments();
-            const result = await Blog.find(query).skip((pageIndex - 1) * pageSize).limit(pageSize).populate("author", "-password").populate(["classification", "label"]);
+            const result = await Blog.find(query).sort({'updateAt': -1}).skip((pageIndex - 1) * pageSize).limit(pageSize).populate("author", "-password").populate(["classification", "label"]);
             JsonResponse(res, 200, {
                 total,
                 items: result
