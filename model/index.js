@@ -17,4 +17,5 @@ module.exports = {
     BlogLabel: mongoose.model('BlogLabel', require('./BlogLabel'), 'blogLabel'),
     FriendlyLink: mongoose.model('FriendlyLink', require('./FriendlyLink'), 'friendlyLink'),
     Comment: mongoose.model('Comment', require('./Comment'), 'comment'),
+    AboutMe: mongoose.model('AboutMe', require('./AboutMe'), 'aboutMe'),
 }

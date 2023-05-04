@@ -38,6 +38,12 @@ const CommentSchema = new Schema({
         type: Number,
         require: true,
         default: Date.now()
+    },
+    //留言类型：0：博客留言，1：留言板留言，2：关于我的留言
+    commentType: {
+        type: Number,
+        require: true,
+        default: 0
     }
 });
 

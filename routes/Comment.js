@@ -14,4 +14,8 @@ router.post("/list", [
     body('blogId').notEmpty().withMessage('博客ID不能为空')
 ], ValidationMiddleware, CommentController.CommentListByBlogId);
 
+router.post("/message", CommentController.CommentListByMessage);
+
+router.post("/aboutMessage", CommentController.CommentListByAboutMessage);
+
 module.exports = router;
