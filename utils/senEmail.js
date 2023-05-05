@@ -151,7 +151,7 @@ const sendEmail = async (reqBody) => {
                 `;
                     transporter.sendMail({
                         from: 'emperor_ywh@163.com',
-                        to: '1289978696@qq.com',
+                        to: toComment.email,
                         subject: `您在[${blogInfo.blogName}]发表的评论有新回复啦！`,
                         html: commentReply
                     }, function (err, info) {
@@ -412,7 +412,7 @@ const sendEmail = async (reqBody) => {
                 `;
                     transporter.sendMail({
                         from: 'emperor_ywh@163.com',
-                        to: '1289978696@qq.com',
+                        to: toComment.email,
                         subject: `您在[${blogInfo.blogName}]发表的评论有新回复啦！`,
                         html: commentReply
                     }, function (err, info) {
