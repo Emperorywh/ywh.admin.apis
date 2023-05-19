@@ -7,6 +7,11 @@ const { RequestLog } = require('../model');
  */
 const RequestLogMiddleWare = (req, res, next) => {
     res.on('finish', async () => {
+        const filterArray = [
+            '/apis/requestLog/list'
+        ];
+        const findFilter = filterArray.find(item => item === req.originalUrl);
+        if (findFilter) return;
         try {
             const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
             const requestLog = new RequestLog({

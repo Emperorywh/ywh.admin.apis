@@ -20,7 +20,7 @@ module.exports = {
                 query.method = method;
             }
             const total = await RequestLog.find(query).countDocuments();
-            const result = await RequestLog.find(query).sort({'updateAt': -1}).skip((pageIndex - 1) * pageSize).limit(pageSize);
+            const result = await RequestLog.find(query).sort({'timestamp': -1}).skip((pageIndex - 1) * pageSize).limit(pageSize);
             JsonResponse(res, 200, {
                 total,
                 items: result
