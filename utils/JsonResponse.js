@@ -7,6 +7,9 @@
  * @param {*} httpStatus http状态码
  */
 const JsonResponse = (res, code, data, message, httpStatus = 200) => {
+    res.locals.code = code;
+    res.locals.data = data;
+    res.locals.message = message;
     res.status(httpStatus).json({
         code,
         data,

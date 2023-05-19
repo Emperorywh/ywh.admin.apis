@@ -8,5 +8,6 @@ router.use('/blogLabel', require('./BlogLabel'));
 router.use('/friendlyLink', require('./FriendlyLink'));
 router.use('/comment', require('./Comment'));
 router.use('/about', require('./AboutMe'));
+router.use('/requestLog', require('./RequestLog'));
 
 module.exports = router;

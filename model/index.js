@@ -18,4 +18,5 @@ module.exports = {
     FriendlyLink: mongoose.model('FriendlyLink', require('./FriendlyLink'), 'friendlyLink'),
     Comment: mongoose.model('Comment', require('./Comment'), 'comment'),
     AboutMe: mongoose.model('AboutMe', require('./AboutMe'), 'aboutMe'),
+    RequestLog: mongoose.model('RequestLog', require('./RequestLog'), 'requestLog'),
 }
