@@ -37,7 +37,8 @@ const verifyToken = (req, res, next) => {
         '/apis/comment/list',
         '/apis/comment/message',
         '/apis/comment/aboutMessage',
-        '/apis/about/findOne'
+        '/apis/about/findOne',
+        '/apis/personalSignature/list'
     ];
     const findWithoutUrl = withoutAuthUrl.find(item => req.originalUrl.includes(item));
     if (findWithoutUrl) {
