@@ -9,5 +9,6 @@ router.use('/friendlyLink', require('./FriendlyLink'));
 router.use('/comment', require('./Comment'));
 router.use('/about', require('./AboutMe'));
 router.use('/requestLog', require('./RequestLog'));
+router.use('/personalSignature', require('./PersonalSignature'));
 
 module.exports = router;

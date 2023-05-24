@@ -19,4 +19,5 @@ module.exports = {
     Comment: mongoose.model('Comment', require('./Comment'), 'comment'),
     AboutMe: mongoose.model('AboutMe', require('./AboutMe'), 'aboutMe'),
     RequestLog: mongoose.model('RequestLog', require('./RequestLog'), 'requestLog'),
+    PersonalSignature: mongoose.model('PersonalSignature', require('./PersonalSignature'))
 }
